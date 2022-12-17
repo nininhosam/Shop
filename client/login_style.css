@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  background-color: red
+}
+main {
+  position: absolute;
+  background-color: aquamarine;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div#centered {
+  background-color: rgb(203, 203, 203);
+  width: 80vmin;
+  height: 80vmin;
+  min-height: 400px;
+  min-width: 344px;
+  border-radius: 10%;
+  border: 0.9vmin solid rgb(57, 57, 57);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+div#info_field {
+  width: 90%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+input.textfield {
+  width: 55%;
+  height: 10%;
+  margin-bottom: 2%;
+  font-size: 150%;
+}
+p.text {
+  width: 55%;
+  margin-bottom: 1%;
+  font-size: 30px;
+}
+
+div#buttons {
+  position: relative;
+  margin-top: 4%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+}
+.button {
+  aspect-ratio: 7/2;
+  width: 25%;
+  cursor: pointer;
+}
+.button_blur {
+  background: none;
+  border: none;
+  color: blue;
+  position: absolute;
+  left: 25%;
+  bottom: -100%;
+  cursor: pointer;
+}
