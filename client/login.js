@@ -29,26 +29,28 @@ async function send(postId, cb1) {
       username: `${username}`,
       password: `${password}`,
     };
-    await post(`${postId}`, request, (res)=>{
-      cb1(res)
+    await post(`${postId}`, request, (res) => {
+      cb1(res);
     });
   }
 }
 
 async function register() {
-  await send("register", (res)=>{
-    alert(res.msg)
-  })
+  await send('register', (res) => {
+    alert(res.msg);
+  });
 }
 async function login() {
-  await send("login", (res)=>{
+  await send('login', (res) => {
     if (res.accessToken == undefined) {
-      alert(res.msg)
+      alert(res.msg);
     } else {
-      localStorage.setItem("accessToken", res.accessToken)
-      window.location.href = "./index.html"
+      localStorage.setItem('accessToken', res.accessToken);
+      localStorage.setItem('permLevel', res.perms);
+      localStorage.setItem('username', res.username);
+      window.location.href = './shop.html';
     }
-  })
+  });
 }
 sendBtn.addEventListener('click', login);
 

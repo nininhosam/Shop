@@ -12,13 +12,27 @@ async function findUser(username) {
       })
   })
 }
-
+async function getPerms(id) {
+  return new Promise((resolve, reject) => {
+    db.query(`select *
+    from perms
+    where user_id = ${id}`, (err, response)=>{
+      if (err) return reject(err)
+      resolve(response)
+    })
+  })
+}
 const AccountController = {
   async getUsers(req, res) {
-    db.query(`select * from users;`, (err, response)=>{
-      if (err) res.status(500).send({"msg": "something went wrong"})
-      res.send(response)
-    })
+    
+    if (req.user.perms > 0){
+      db.query(`select * from users;`, (err, response)=>{
+        if (err) res.status(500).send({"msg": "something went wrong"})
+        res.send(response)
+      })
+    } else {
+      res.status(403).send({"msg": "Unauthorized."})
+    }
   },
   async register(req, res){
     
@@ -50,9 +64,15 @@ const AccountController = {
     }
     try {
       if(await bcrypt.compare(req.body.password, user[0].password)) {
-        const userInfo = { name: user[0].username, id: user[0].id}
+        const perms = await getPerms(user[0].id)
+        let permLevel = 0
+        if (perms != 0) {
+          permLevel = perms[0].perm_level
+        }
+
+        const userInfo = { name: user[0].username, id: user[0].id, perms: permLevel}
         const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 300})
-        res.json({ accessToken: accessToken})
+        res.json({ accessToken: accessToken, perms: permLevel, username: user[0].username})
       } else {
         res.status(401).send({ "msg": "Incorrect username or password"})
       }

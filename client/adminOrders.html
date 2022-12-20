@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="adminOrders_style.css" />
+    <title>Admin settings</title>
+  </head>
+  <body>
+    <main>
+      <div id="navBar">
+        <div id="shop_tab" class="tab">
+          <img src="./src/shop_icon.png" alt="shop_tab" class="icon" />
+          <p class="tabText">Shop</p>
+        </div>
+        <div id="cart_tab" class="tab">
+          <img src="./src/cart_icon.png" alt="cart_tab" class="icon" />
+          <p class="tabText">Cart</p>
+        </div>
+        <div id="logout_tab" class="tab">
+          <img src="./src/logout_icon.png" alt="logout_tab" class="icon" />
+          <p class="tabText">Log out</p>
+        </div>
+
+        <span id="welcome"></span>
+      </div>
+
+      <div id="content">
+        <div id="title"><h1 id="title">Customers orders</h1></div>
+        <div id="orders"></div>
+      </div>
+    </main>
+    <script src="adminOrders.js"></script>
+  </body>
+</html>

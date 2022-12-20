@@ -1,8 +1,45 @@
 const productList = document.querySelector('div#productList');
 const cartListBox = document.querySelector('div#cartListBox');
 const buyBtn = document.querySelector('div#pushCart');
+
+const navBar = document.querySelector('div#navBar');
+const shopTab = document.querySelector('div#shop_tab');
+const cartTab = document.querySelector('div#cart_tab');
+const logOutTab = document.querySelector('div#logout_tab');
+const welcome = document.querySelector('span#welcome');
+
+const server = `http://localhost:4000`;
+const accessToken = localStorage.getItem('accessToken');
+const perms = localStorage.getItem('permLevel');
 const allItems = [];
 const cart = [];
+
+welcome.innerHTML = `Welcome, ${localStorage.getItem('username')}`;
+if (perms > 0) {
+  let adminTab = document.createElement('div');
+  adminTab.setAttribute('id', 'admin_tab');
+  adminTab.setAttribute('class', 'tab');
+  navBar.insertBefore(adminTab, welcome);
+
+  let admIc = document.createElement('img');
+  admIc.setAttribute('src', './src/admin_icon.png');
+  admIc.setAttribute('alt', 'admin_tab');
+  admIc.setAttribute('class', 'icon');
+  adminTab.appendChild(admIc);
+
+  let admP = document.createElement('p');
+  admP.setAttribute('class', 'tabText');
+  admP.innerHTML = 'Admin';
+  adminTab.appendChild(admP);
+
+  adminTab.addEventListener('click', () => {
+    location.href = './adminOrders.html';
+  });
+}
+if (!accessToken) {
+  location.href = './login.html';
+}
+console.log(accessToken);
 const generateList = (allProducts) => {
   allProducts.forEach((product) => {
     let box = document.createElement('div');
@@ -66,7 +103,7 @@ const generateList = (allProducts) => {
   });
 };
 const getItems = async (cb) => {
-  return fetch(`http://localhost:4000/`)
+  return fetch(`${server}`)
     .then((res) => res.json())
     .then((data) => {
       cb(data);
@@ -78,6 +115,7 @@ getItems((data) => {
   });
   generateList(allItems);
 });
+
 const addToCart = (item, amount) => {
   if (document.querySelector(`div#C${item}`)) {
     window.alert('This item is already in your shopping cart');
@@ -158,7 +196,7 @@ const addToCart = (item, amount) => {
   }
 };
 const sendOrder = async (body, auth) => {
-  return fetch(`http://localhost:4000/order`, {
+  return fetch(`${server}/order`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${auth}`,
@@ -167,16 +205,21 @@ const sendOrder = async (body, auth) => {
     },
     body: body,
     cache: 'default',
-  })
+  });
 };
-
+const logout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('username');
+  localStorage.removeItem('permLevel');
+  location.href = './login.html';
+};
 buyBtn.addEventListener('click', async () => {
   if (cart.length == 0) {
     alert('The cart is Empty');
   } else {
-    let authorization = localStorage.getItem("accessToken")
     postReq = JSON.stringify(cart);
-    await sendOrder(postReq, authorization);
+    const res = await (await sendOrder(postReq, accessToken)).json();
+    alert(res.msg);
     cart.length = 0;
     let remove = document.querySelectorAll('.cartRemove');
     remove.forEach((e) => {
@@ -184,3 +227,11 @@ buyBtn.addEventListener('click', async () => {
     });
   }
 });
+
+shopTab.addEventListener('click', () => {
+  location.href = './shop.html';
+});
+cartTab.addEventListener('click', () => {
+  location.href = './cart.html';
+});
+logOutTab.addEventListener('click', logout);

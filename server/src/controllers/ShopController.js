@@ -45,14 +45,14 @@ async function getLastCartId() {
 
 const ShopController = {
   async getAllProducts(req, res) {
-    db.query(`select * from products`, (err, result) => {
-      if (err) res.status(500).send({ "msg": 'An error has occurred.' });
+    db.query(`select * from products;`, (err, result) => {
+      if (err) res.status(500).send({ msg: 'An error has occurred.' });
       res.send(result);
     });
   },
   async pushCart(req, res) {
     const cart = req.body;
-    const userId = req.user.id
+    const userId = req.user.id;
 
     const checked = await checkProducts(cart);
     if (checked == true) {
@@ -69,16 +69,59 @@ const ShopController = {
           `insert into carts (cart_id, product, amount, user_id) values (${id}, '${key}', ${product[key]}, '${userId}');`,
           (err) => {
             if (err) {
-              res.status(500).send({"msg": err})
+              res.status(500).send({ msg: err });
             }
           }
         );
       });
-      res.status(201).send({ "msg": 'Cart added' });
+      res.status(201).send({ msg: 'Cart added' });
     } else {
-      res.status(400).send({ "msg": "One or more items don't exist" });
+      res.status(400).send({ msg: "One or more items don't exist" });
     }
   },
-}
+  async getUserCarts(req, res) {
+    const id = req.user.id;
+    db.query(`select * from carts where user_id = ${id};`, (err, result) => {
+      if (err) res.status(500).send({ msg: 'An error has occurred.' });
+      res.send(result);
+    });
+  },
+  async getAllCarts(req, res) {
+    if (req.user.perms > 0) {
+      db.query(`select * from carts;`, (err, result) => {
+        if (err) res.status(500).send({ msg: 'An error has occurred.' });
+        res.send(result);
+      });
+    }
+  },
+  async finishOrder(req, res) {
+    const cartId = req.body.cartId;
+    if (req.user.perms > 0) {
+      db.query(
+        `update carts
+      set finished = 1
+      where cart_id = ${cartId};`,
+        (err, result) => {
+          if (err) res.status(500).send({ msg: err});
+          else res.send({"msg": "Marked as finished"})
+        }
+      );
+    }
+  },
+  async denyOrder(req, res) {
+    const cartId = req.body.cartId;
+    if (req.user.perms > 0) {
+      db.query(
+        `update carts
+      set finished = -1
+      where cart_id = ${cartId};`,
+        (err, result) => {
+          if (err) res.status(500).send({ msg: err})
+          else res.send({"msg": "Order denied"})
+        }
+      );
+    }
+  },
+};
 
-module.exports = ShopController
+module.exports = ShopController;
