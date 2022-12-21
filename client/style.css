@@ -1,0 +1,409 @@
+/* general stuff */
+body {
+  margin: 0;
+}
+main {
+  position: absolute;
+  background-color: rgb(183, 255, 128);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+div#navBar {
+  background-color: rgb(154, 212, 111);
+  width: 12%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: baseline;
+}
+.tab {
+  background-color: rgb(121, 163, 88);
+  box-shadow: 0.8vmin 1vmin 0 rgb(62, 62, 62);
+  margin-top: 5%;
+  border-radius: 25px;
+  width: 90%;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  gap: 2%;
+  cursor: pointer;
+}
+.icon {
+  max-width: 30%;
+  max-height: 100%;
+}
+.tabText {
+  color: white;
+  font-size: 130%;
+  flex-grow: 1;
+  overflow: hidden;
+}
+#adminPages {
+  margin-top: 5%;
+  height: 20%;
+}
+div#admin_tab {
+  background-color: rgb(121, 163, 88);
+  border-radius: 25px;
+  margin-top: 5%;
+  width: 90%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  gap: 2%;
+  cursor: pointer;
+  overflow: hidden;
+}
+#welcome {
+  margin-top: 20%;
+}
+
+/* login stuff */
+main#loginMain {
+  align-items: center;
+}
+div#centered {
+  background-color: rgb(203, 203, 203);
+  width: 80vmin;
+  height: 80vmin;
+  min-height: 400px;
+  min-width: 344px;
+  border-radius: 10%;
+  border: 0.9vmin solid rgb(57, 57, 57);
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+div#info_field {
+  width: 90%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+input.textfield {
+  width: 55%;
+  height: 10%;
+  margin-bottom: 2%;
+  font-size: 150%;
+}
+p.text {
+  width: 55%;
+  margin-bottom: 1%;
+  font-size: 30px;
+}
+
+div#buttons {
+  position: relative;
+  margin-top: 4%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+}
+.button {
+  aspect-ratio: 3.5;
+  width: 25%;
+  cursor: pointer;
+}
+.button_blur {
+  background: none;
+  border: none;
+  color: blue;
+  position: absolute;
+  left: 25%;
+  bottom: -100%;
+  cursor: pointer;
+}
+
+/* cart and adminOrder stuff */
+div#content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+}
+div#title {
+  min-width: 40%;
+  height: 10%;
+  flex-shrink: 0;
+}
+h1#title {
+  margin: 0;
+  color: rgb(84, 84, 84);
+  box-shadow: 0 0.5vmin 0 rgba(71, 117, 36, 0.732);
+  font: bold 10vh arial;
+  text-align: center;
+}
+div#orders,
+div#users {
+  align-self: stretch;
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 2%;
+  column-gap: 1%;
+  row-gap: 5%;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  box-shadow: 0 1.5vmin 1.5vmin rgb(125, 154, 103);
+}
+#orders::-webkit-scrollbar,
+#users::-webkit-scrollbar {
+  display: none;
+}
+
+.singleOrder,
+.singleUser {
+  background-color: rgb(255, 255, 255);
+  border: 0.9vmin solid rgb(0, 0, 0);
+  width: 20%;
+  max-height: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cartId {
+  position: relative;
+  box-shadow: 0 0.6vmin 0 #000;
+  width: 80%;
+  height: 15%;
+  text-align: center;
+  flex-grow: 0;
+}
+.idTxt {
+  overflow: hidden;
+  font-size: 1em;
+  z-index: 2;
+}
+.products {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.products::-webkit-scrollbar {
+  display: none;
+}
+.productTxt {
+  background-color: hsl(0, 0%, 85%);
+  font-size: 150%;
+  padding: 3%;
+  border-radius: 25px;
+  margin-top: 5%;
+  margin-left: 2%;
+  height: 10%;
+}
+/* adminOrder stuff */
+.admOptions {
+  display: flex;
+  gap: 4%;
+  justify-content: flex-end;
+  align-items: center;
+}
+.admBtn {
+  width: 13%;
+  cursor: pointer;
+}
+.deleteBtn {
+  border-radius: 20px;
+  border: 0.6vmin solid rgb(255, 0, 0);
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+.selfBtn {
+  border-radius: 25px;
+  border: 0.6vmin solid rgb(0, 0, 0);
+  margin-right: 2%;
+  margin-bottom: 2%;
+  cursor: default;
+}
+/* adminUser stuff */
+.userInfo {
+  position: relative;
+  padding: 5%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.userInfo::-webkit-scrollbar {
+  display: none;
+}
+.userInfoName {
+  box-shadow: 0 0.6vmin 0 #000;
+  min-height: 6vmin;
+  line-height: 1em;
+  font-size: 190%;
+  font-weight: 600;
+  padding: 5%;
+  margin-top: -4%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.userInfoName::-webkit-scrollbar {
+  display: none;
+}
+.userInfoTxt {
+  margin-top: 5%;
+}
+
+#newField {
+  background-color: rgb(107, 107, 107);
+  color: rgb(249, 255, 71);
+  border: 0.9vmin solid rgb(0, 0, 0);
+  height: 20%;
+  border-radius: 25px;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  padding: 0.5%;
+  width: 30%;
+  align-items: center;
+  gap: 5%;
+}
+#newInfo {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  width: 60%;
+  height: 96%;
+  overflow: hidden;
+  gap: 10%;
+}
+.newField {
+  height: 30%;
+}
+.newInput {
+  width: 62%;
+}
+#addUser {
+  aspect-ratio: 2.2;
+  border-radius: 25px;
+  cursor: pointer;
+}
+/* Shop stuff */
+div#productList {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  box-shadow: 0.6vmin 0 0 #000;
+}
+#productList::-webkit-scrollbar {
+  display: none;
+}
+.productBox {
+  background-color: rgb(48, 200, 197);
+  aspect-ratio: 1;
+  width: 20%;
+}
+
+div#cartList {
+  /* background-color: aqua; */
+  width: 28%;
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div#cartListBox {
+  background-color: hsl(0, 0%, 100%);
+  border: 0.9vmin solid rgb(0, 0, 0);
+  width: 90%;
+  height: 96%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#cartListBox::-webkit-scrollbar {
+  display: none;
+}
+p#cartTitle {
+  margin: 0;
+  font-size: 200%;
+  font-weight: 600;
+}
+.cartBox {
+  background-color: rgb(161, 161, 161);
+  aspect-ratio: 3;
+  width: 80%;
+}
+
+.requestBox {
+  border: 0.9vmin solid rgb(66, 66, 66);
+  margin: 1.5%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+div.itemName {
+  flex-grow: 1;
+  height: 50%;
+}
+p.itemNameP {
+  margin: 0;
+  color: rgb(255, 255, 255);
+  font-size: 200%;
+  text-align: center;
+}
+div.qtyEdit {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+p.quantity {
+  color: rgb(44, 44, 44);
+  font-size: 150%;
+}
+.less,
+.more {
+  aspect-ratio: 1;
+  font-size: 100%;
+  width: 12%;
+}
+
+div#pushCart {
+  background-color: green;
+  aspect-ratio: 3;
+  border: 0.9vmin solid rgb(66, 66, 66);
+  flex-shrink: 0;
+  margin: 1.5%;
+  width: 50%;
+  text-align: center;
+  justify-self: flex-end;
+  cursor: pointer;
+}
+p#buy {
+  margin: 0;
+  color: rgb(255, 255, 255);
+  font-size: 400%;
+}

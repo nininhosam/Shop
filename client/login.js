@@ -2,9 +2,10 @@ const usernameInput = document.querySelector('input#username_textfield');
 const passwordInput = document.querySelector('input#password_textfield');
 const sendBtn = document.querySelector('button#send');
 const changeBtn = document.querySelector('button#changeSend');
+const server = `http://localhost:4000`;
 
-const post = async (id, body, cb) => {
-  return fetch(`http://localhost:4000/${id}`, {
+const post = async (path, body, cb) => {
+  return fetch(`${server}/${path}`, {
     method: 'POST',
     headers: {
       Accept: 'application.json',
@@ -19,7 +20,7 @@ const post = async (id, body, cb) => {
     });
 };
 
-async function send(postId, cb1) {
+async function send(postPath, cb1) {
   let username = usernameInput.value;
   let password = passwordInput.value;
   if (username == 0 || password == 0) {
@@ -29,7 +30,7 @@ async function send(postId, cb1) {
       username: `${username}`,
       password: `${password}`,
     };
-    await post(`${postId}`, request, (res) => {
+    await post(`${postPath}`, request, (res) => {
       cb1(res);
     });
   }

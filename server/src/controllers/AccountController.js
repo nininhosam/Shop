@@ -24,9 +24,13 @@ async function getPerms(id) {
 }
 const AccountController = {
   async getUsers(req, res) {
-    
+
     if (req.user.perms > 0){
-      db.query(`select * from users;`, (err, response)=>{
+      db.query(`select users.id, users.username, count(carts.cart_id) orders, perms.perm_level
+      from users
+      left join carts on users.id = carts.user_id
+      left join perms on users.id = perms.user_id
+      group by users.id;`, (err, response)=>{
         if (err) res.status(500).send({"msg": "something went wrong"})
         res.send(response)
       })
@@ -46,6 +50,11 @@ const AccountController = {
         into users (username, password) 
         values ('${req.body.username}', '${hashedPassword}');
         `)
+
+        let newUser = await findUser(req.body.username)
+        db.query(`insert into perms (user_id, perm_level) values (${newUser[0].id}, 0);`, (err, res)=>{
+          if (err) console.log(err)
+        })
   
         res.status(201).send({"msg": "User Registered"})
       } catch (error) {
@@ -81,6 +90,35 @@ const AccountController = {
       res.status(500).send({ "msg": "Something went wrong"})
     }
   },
+  async setPerms(req, res) {
+    if (req.user.perms > 1){
+      const reqPerm = req.body.perm_level
+      const user = await findUser(req.body.username)
+      if (user == 0) {
+        return res.status(400).send({ "msg": "Username does not exist"})
+      } else {
+          db.query(`update perms set perm_level = ${reqPerm} where user_id = ${user[0].id};`, (err)=>{
+            if (err) res.status(500).send({"msg": "Something went wrong"})
+            else res.send({"msg": "Updated perms"})
+          })
+      }
+    } else {
+      res.status(403).send({"msg": "Unauthorized."})
+    }
+  },
+  async delUser(req, res) {
+    if (req.user.perms > 1){
+      let { id } = req.params
+      const user = await findUser(id)
+      db.query(`delete from users 
+        where id = ${user[0].id};`, (err, result)=>{
+          if (err) res.status(500).send({"msg": "something went wrong"})
+          else res.send({"msg": "deleted."})
+      })
+    } else {
+      res.status(403).send({"msg": "unauthorized"})
+    }
+  },
   async authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -91,7 +129,7 @@ const AccountController = {
       req.user = userInfo 
       next()
     })
-  }
+  },
 }
 
 module.exports = AccountController;
