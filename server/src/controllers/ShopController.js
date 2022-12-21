@@ -92,6 +92,8 @@ const ShopController = {
         if (err) res.status(500).send({ msg: 'An error has occurred.' });
         res.send(result);
       });
+    } else {
+      res.status(403).send({"msg": "Unauthorized."})
     }
   },
   async finishOrder(req, res) {

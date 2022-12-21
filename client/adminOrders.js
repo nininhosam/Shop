@@ -15,6 +15,8 @@ adminOptions(perms);
 
 if (accessToken == null || perms == null) {
   location.href = './shop.html';
+} else if (perms < 1) {
+  location.href = './shop.html';
 }
 const sendPost = async (path, body, auth, cb) => {
   return fetch(`${server}/${path}`, {

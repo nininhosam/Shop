@@ -17,6 +17,8 @@ welcome.innerHTML = `Welcome, ${localStorage.getItem('username')}`;
 adminOptions(perms);
 if (accessToken == null || perms == null) {
   location.href = './login.html';
+} else if (perms < 1) {
+  location.href = './shop.html';
 }
 const setPerm = async (auth, username, permLevel, cb) => {
   let body = {
